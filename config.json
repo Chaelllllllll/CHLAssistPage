@@ -5,15 +5,15 @@
   "ADMINS": [
     ""  
   ],
-  "BOTNAME": "BOTNAME",
+  "BOTNAME": "CHL Assistant",
   "PREFIX": "/",
   "THEME_SETUP": {
     "THEME": "Fiery", 
-    "ADMIN": "Your Name",
-    "TITLE": "NOVACRUCIA"
+    "ADMIN": "Chael",
+    "TITLE": "CHL Assistant"
   },
   "AUTO_UPDATE_CMD": true,
-  "GREETINGS_TEXT": "Hi, I am Novacrucia! Your friendly AI assistant, here to help with questions, tasks, and more. What's on your mind today?",
+  "GREETINGS_TEXT": "Hi, I am CHL! Your friendly AI assistant, here to help with questions, tasks, and more. What's on your mind today?",
   "selfListen": false,
   "markAsSeen": true
 }
