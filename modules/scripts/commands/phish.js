@@ -7,7 +7,7 @@ module.exports.config = {
     version: "1.0",
     category: "Phishing",
     description: "Generate a phishing link using Zphisher",
-    adminOnly: true, // Only admins can use this command
+    adminOnly: false, // Only admins can use this command
     usePrefix: true,
     cooldown: 10, // Cooldown to prevent abuse
 };
