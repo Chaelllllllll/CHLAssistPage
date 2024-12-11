@@ -1,0 +1,19 @@
+module.exports.config = {
+  name: 'Nothing to see here',
+  author: '',
+  version: '1.0',
+  description: '',
+  selfListen: false,
+};
+
+module.exports.run = async function({ event, args }) {
+  // YOU CAN ADD ANYTHING HERE, ADD MORE OR DO WHAT YOU WANT HERE, I DON'T CARE ^-^
+  
+  /** EVENT TYPES
+   * postback
+   * quick_reply
+   * message_reaction
+   * message_reply
+   * message
+   * mark_as_seen **/
+};
