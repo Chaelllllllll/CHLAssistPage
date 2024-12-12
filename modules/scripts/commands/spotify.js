@@ -1,22 +1,42 @@
-const axios = require('axios');
-const { sendMessage } = require('../handles/sendMessage');
+const axios = require('axios'); 
 
-module.exports = {
-  name: 'spotify',
-  description: 'search and play spotify song.',
-  usage: 'spotify [song name]',
-  author: 'chael',
+module.exports.config = {
+    name: "spotify", 
+    author: "Chael",
+    version: "1.0",
+    category: "Music",
+    description: "Search and play a Spotify song",
+    adminOnly: false, 
+    usePrefix: true, 
+    cooldown: 5, 
+};
 
-  async execute(senderId, args, pageAccessToken) {
+module.exports.run = async function ({ event, args }) {
     try {
-      const { data } = await axios.get(`https://hiroshi-api.onrender.com/tiktok/spotify?search=${encodeURIComponent(args.join(' '))}`);
-      const link = data[0]?.download;
+        // Join the command arguments into a single user query string
+        const songQuery = args.join(" ");
 
-      sendMessage(senderId, link ? {
-        attachment: { type: 'audio', payload: { url: link, is_reusable: true } }
-      } : { text: 'Sorry, no Spotify link found for that query.' }, pageAccessToken);
-    } catch {
-      sendMessage(senderId, { text: 'Sorry, there was an error processing your request.' }, pageAccessToken);
+        // Make an API request to fetch the Spotify link
+        const response = await axios.get(`https://hiroshi-api.onrender.com/tiktok/spotify?search=${encodeURIComponent(songQuery)}`);
+        const spotifyLink = response.data[0]?.download;
+
+        // Check if the Spotify link was found
+        if (spotifyLink) {
+            // If a Spotify link is found, send it as an audio message
+            api.sendMessage({
+                attachment: { type: 'audio', payload: { url: spotifyLink, is_reusable: true } }
+            }, event.sender.id);
+        } else {
+            // If no Spotify link is found, send an error message
+            api.sendMessage("Sorry, no Spotify link found for that query.", event.sender.id).catch(err => {
+                console.error("Error sending message:", err);
+            });
+        }
+    } catch (error) {
+        // If an error occurs while fetching data from the API, send an error message
+        console.error("Error fetching data from Spotify API:", error);
+        api.sendMessage("An error occurred while trying to fetch the Spotify song.", event.sender.id).catch(err => {
+            console.error("Error sending message:", err);
+        });
     }
-  }
 };
