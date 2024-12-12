@@ -21,13 +21,14 @@ module.exports.run = async function ({ event, args }) {
         // Make an API request to fetch the Spotify song link
         const response = await axios.get(`https://hiroshi-api.onrender.com/tiktok/spotify?search=${encodeURIComponent(songQuery)}`);
         const spotifyLink = response.data[0]?.download;
+        const songtitle = response.data[0]?.name;
 
         // Check if a valid Spotify link was found
         if (spotifyLink) {
             // File path for saving the song
-            const filePath = path.join(__dirname, "cache", `spotify_song_${Date.now()}.mp3`);
+            const filePath = path.join(__dirname, "/cache", `${songtitle}.mp3`);
 
-            // Download the Spotify song and save it in the cache folder
+            // Download the Spotify song and save it in the /cache/ folder
             const writer = fs.createWriteStream(filePath);
             const downloadResponse = await axios({
                 method: "get",
@@ -43,7 +44,7 @@ module.exports.run = async function ({ event, args }) {
             });
 
             // Send the downloaded file as an audio attachment
-            await api.sendAttachment("file", filePath, event.sender.id);
+            await api.sendAttachment("file", __dirname + '/cache/${songtitle}.mp3', event.sender.id);
 
             // Delete the file after sending
             fs.unlink(filePath, (err) => {
