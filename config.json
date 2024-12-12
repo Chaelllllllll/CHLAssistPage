@@ -3,17 +3,17 @@
   "pageID": "533989389788330",
   "VERIFY_TOKEN": "CHLASSIST",
   "ADMINS": [
-    ""  
+    ""
   ],
   "BOTNAME": "CHL Assistant",
   "PREFIX": "/",
   "THEME_SETUP": {
-    "THEME": "Fiery", 
+    "THEME": "Fiery",
     "ADMIN": "Chael",
     "TITLE": "CHL Assistant"
   },
   "AUTO_UPDATE_CMD": false,
   "GREETINGS_TEXT": "Hi, I am CHL! Your friendly AI assistant, here to help with questions, tasks, and more. What's on your mind today?",
-  "selfListen": false,
+  "selfListen": true,
   "markAsSeen": true
 }
