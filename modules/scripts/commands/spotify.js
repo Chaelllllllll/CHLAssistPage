@@ -17,8 +17,8 @@ module.exports.run = async function ({ event, args }) {
         
         const response = await axios.get(`https://hiroshi-api.onrender.com/tiktok/spotify?search=${encodeURIComponent(userInput)}`);
 
-        if (response.data) {
-            const link = response.data.download;
+        if (response && response.status) {
+            const link = response[0].download;
 
             console.log(link);
 
