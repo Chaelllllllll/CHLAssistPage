@@ -1,4 +1,6 @@
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
 module.exports.config = {
     name: "spotify", // command name
@@ -11,7 +13,7 @@ module.exports.config = {
     cooldown: 5, // cooldown on how many commands to be used
 };
 
-module.exports.run = async function ({ event, args}) {
+module.exports.run = async function ({ event, args, api }) {
     try {
         const userInput = args.join(" "); // Join user input arguments
 
@@ -26,8 +28,32 @@ module.exports.run = async function ({ event, args}) {
 
             console.log("Download link:", link);
 
-            // Send the download link as an attachment
-            api.sendMessage(link, event.sender.id);
+            // Download the MP3 file
+            const mp3Path = path.resolve(__dirname, 'temp.mp3');
+            const writer = fs.createWriteStream(mp3Path);
+
+            const downloadResponse = await axios({
+                url: link,
+                method: 'GET',
+                responseType: 'stream',
+            });
+
+            downloadResponse.data.pipe(writer);
+
+            // Wait for the download to complete
+            await new Promise((resolve, reject) => {
+                writer.on('finish', resolve);
+                writer.on('error', reject);
+            });
+
+            // Send the MP3 file as a message
+            await api.sendMessage({
+                body: `Here is your requested track: ${response.data[0].name}`,
+                attachment: fs.createReadStream(mp3Path),
+            }, event.senderID);
+
+            // Clean up the temporary file
+            fs.unlinkSync(mp3Path);
         } else {
             console.error("Invalid response structure or no data available:", response.data);
         }
