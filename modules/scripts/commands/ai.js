@@ -17,11 +17,11 @@ module.exports.run = async function ({ event, args }) {
         const userQuery = args.join(" ");
 
         // Make an API request to fetch the response from the GPT-4 API
-        const response = await axios.get(`https://markdevs-last-api-vtjp.onrender.com/api/v3/gpt4?ask=${encodeURIComponent(userQuery)}`);
+        const response = await axios.get(`https://api.joshweb.click/ai/deepseek-coder?q=${encodeURIComponent(userQuery)}&uid=1`);
 
         // Check if the response contains valid data
         if (response.data && response.data.status) {
-            const message = response.data.answer; 
+            const message = response.data.result; 
 
             // Send the API response message to the user
             api.sendMessage(message, event.sender.id).catch(err => {
