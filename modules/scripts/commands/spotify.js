@@ -13,7 +13,7 @@ module.exports.config = {
     cooldown: 5, // cooldown on how many commands to be used
 };
 
-module.exports.run = async function ({ event, args, api }) {
+module.exports.run = async function ({ event, args}) {
     try {
         const userInput = args.join(" "); // Join user input arguments
 
