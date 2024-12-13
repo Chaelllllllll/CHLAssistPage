@@ -1,4 +1,6 @@
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
 module.exports.config = {
     name: "spotify", // command name
@@ -11,7 +13,7 @@ module.exports.config = {
     cooldown: 5, // cooldown on how many commands to be used
 };
 
-module.exports.run = async function ({ event, args}) {
+module.exports.run = async function ({ event, args, api }) {
     try {
         const userInput = args.join(" "); // Join user input arguments
 
@@ -23,14 +25,15 @@ module.exports.run = async function ({ event, args}) {
         // Check if the response is valid
         if (response && response.status === 200 && Array.isArray(response.data) && response.data.length > 0) {
             const link = response.data[0].download; // Get the download link
-            const name = response.data[0].name;
+            const name = response.data[0].name; // Get the song title
 
-            console.log("Title:", name, "\nDownload Link: ", link);
+            console.log("Title:", name, "\nDownload Link:", link);
 
-            const message = ("Title:", name, "\nDownload Link: ", link);
+            const message = `Title: ${name}\nDownload Link: ${link}`;
 
             // Send the download link as an attachment
             api.sendMessage(message, event.sender.id);
+
         } else {
             console.error("Invalid response structure or no data available:", response.data);
         }
