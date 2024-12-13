@@ -29,7 +29,7 @@ module.exports.run = async function ({ event, args, api }) {
             console.log("Download link:", link);
 
             // Download the MP3 file
-            const mp3Path = path.resolve(__dirname, 'temp.mp3');
+            const mp3Path = path.resolve(__dirname, 'cache', 'temp.mp3');
             const writer = fs.createWriteStream(mp3Path);
 
             const downloadResponse = await axios({
@@ -47,10 +47,11 @@ module.exports.run = async function ({ event, args, api }) {
             });
 
             // Send the MP3 file as a message
-            await api.sendMessage({
-                body: `Here is your requested track: ${response.data[0].name}`,
-                attachment: fs.createReadStream(mp3Path),
-            }, event.senderID);
+            try {
+                await api.sendAttachment("file", mp3Path, event.sender.id);
+            } catch (err) {
+                console.error("Error sending file:", err);
+            }
 
             // Clean up the temporary file
             fs.unlinkSync(mp3Path);
