@@ -27,7 +27,7 @@ module.exports.run = async function ({ event, args}) {
             console.log("Download link:", link);
 
             // Send the download link as an attachment
-            api.sendAttachment("url", link, event.sender.id);
+            api.sendMessage(link, event.sender.id);
         } else {
             console.error("Invalid response structure or no data available:", response.data);
         }
