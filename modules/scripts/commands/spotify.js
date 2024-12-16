@@ -31,7 +31,7 @@ module.exports.run = async function ({ event, args}) {
 
             const message = `Title: ${name}\nDownload Link: ${link}`;
 
-            api.sendAttachment("url", link, event.send.id)
+            api.sendAttachment("url", link, event.sender.id)
             //api.sendMessage(message, event.sender.id);
 
         } else {
