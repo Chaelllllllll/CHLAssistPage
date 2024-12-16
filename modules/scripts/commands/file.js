@@ -11,7 +11,7 @@ module.exports.config = {
 
 module.exports.run = async function ({ event, args }) {
     try {
-        await api.sendAttachment("file", __dirname + "/cache/love.mp3", event.sender.id);
+        await api.sendAttachment("file", __dirname + "/cache/example.jpg", event.sender.id);
     } catch (err) {
         console.log(err);
     }
