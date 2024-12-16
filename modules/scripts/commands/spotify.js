@@ -31,7 +31,8 @@ module.exports.run = async function ({ event, args}) {
 
             const message = `Title: ${name}\nDownload Link: ${link}`;
 
-            api.sendMessage(message, event.sender.id);
+            api.sendAttachment("url", link, event.send.id)
+            //api.sendMessage(message, event.sender.id);
 
         } else {
             console.error("Invalid response structure or no data available:", response.data);
